@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">JankenFuuChan</string>
+    <string name="futcha">ふうちゃんの\nかち！</string>
+    <string-array name="player1">
+        <item>ふうちゃん</item>
+        <item>ふうちゃん</item>
+        <item>ふうちゃん</item>
+        <item>ふうちゃん</item>
+        <item>ふうちゃん</item>
+        <item>ふうちゃん</item>
+        <item>ふうちゃん</item>
+        <item>ふうちゃん</item>
+        <item>ふうちゃん</item>
+        <item>ふうちゃん</item>
+
+
+    </string-array>
+
+    <string-array name="arrayBattleTimes">
+        <item>０３</item>
+        <item>０５</item>
+        <item>１０</item>
+        <item>１５</item>
+        <item>２０</item>
+
+
+    </string-array>
+</resources>
