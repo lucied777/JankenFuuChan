@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -35,6 +36,8 @@ public class MainJanken extends AppCompatActivity {
     TextView textWinCount2;
     TextView textJanken1;
     TextView textJanken2;
+    TextView textWinFlag1;
+    TextView textWinFlag2;
 
     ImageButton buttonGuu;
     ImageButton buttonChoki;
@@ -54,6 +57,9 @@ public class MainJanken extends AppCompatActivity {
     final int JANKEN = 0;
     final int AIKO = 1;
     final int RESULT = 2;
+    final String[]arrayReadySerifu = {"まけないぞ～","なにをだそう","う～ん"};
+    final String[]arrayWinSerifu = {"やった～！","かった～！","うれしいな！"};
+    final String[]arrayLoseSerifu = {"くやしい～","まけた～","かなしい・・"};
 
     int winCount1 = 0;
     int winCount2 = 0;
@@ -90,7 +96,7 @@ public class MainJanken extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_janken);
-        findViewById(R.id.layoutMain).getBackground().setAlpha(120);
+        findViewById(R.id.layoutMain2).getBackground().setAlpha(120);
 
         realm = Realm.getDefaultInstance();
 
@@ -108,6 +114,8 @@ public class MainJanken extends AppCompatActivity {
         textWinCount2 = findViewById(R.id.textWinTimes2);
         textJanken1 = findViewById(R.id.textJanken1);
         textJanken2 = findViewById(R.id.textJanken2);
+        textWinFlag1 = findViewById(R.id.textWinFrag1);
+        textWinFlag2 = findViewById(R.id.textWinFlag2);
 
         buttonGuu = findViewById(R.id.buttonGuu);
         buttonChoki = findViewById(R.id.buttonChoki);
@@ -115,16 +123,8 @@ public class MainJanken extends AppCompatActivity {
 
         buttonStart = findViewById(R.id.buttonStart);
 
-
-
-        //spinnerPlayer1.setEnabled(true);
-
-
         //初期化メソッドの呼び出し
         init();
-
-
-
 
     }
 
@@ -167,7 +167,31 @@ public class MainJanken extends AppCompatActivity {
                 player1 = new PlayerBmp(player);
 
                 //うーたんの画像がなければRealmに登録してプレイヤー２にセット
+                player = realm.where(Player.class).equalTo("id",1).findFirst();
+                if(player == null){
+                    player = realm.createObject(Player.class,1);
+                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.utanready);
+                    byte[] bytearray = MyUtils.getByteFromImage(bitmap);
+                    player.name = "うーたん";
+                    player.byteReady = bytearray;
+                    bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.utanguu);
+                    bytearray = MyUtils.getByteFromImage(bitmap);
+                    player.byteGuu = bytearray;
+                    bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.utanchoki2);
+                    bytearray = MyUtils.getByteFromImage(bitmap);
+                    player.byteChoki = bytearray;
+                    bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.utanpaa2);
+                    bytearray = MyUtils.getByteFromImage(bitmap);
+                    player.bytePaa = bytearray;
+                    bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.utanwin);
+                    bytearray = MyUtils.getByteFromImage(bitmap);
+                    player.byteWin = bytearray;
+                    bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.utanlose);
+                    bytearray = MyUtils.getByteFromImage(bitmap);
+                    player.byteLose = bytearray;
+                }
                 player2 = new PlayerBmp(player);
+
 
 
                 //プレイヤーリストとスピナーの選択リストを取得
@@ -179,10 +203,43 @@ public class MainJanken extends AppCompatActivity {
                     listPlayerName.add(((Player) players).name);
                 }
 
-                //スピナー作成とアダプターをセット
+                //スピナー作成とアダプターとリスナーをセット
+
+                //プレイヤー１選択スピナー
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(MainJanken.this,R.layout.spinner3,listPlayerName);
+                adapter.setDropDownViewResource(R.layout.spinner_dropdown);
                 spinnerPlayer1.setAdapter(adapter);
+                spinnerPlayer1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        player1 = listPlayer.get(i);
+                        imagePlayer1.setImageBitmap(player1.bitmapReady);
+                        //textJanken1.setText(arrayReadySerifu[(int)(Math.random() * 3)]);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+
+                //プレイヤー２選択スピナー
                 spinnerPlayer2.setAdapter(adapter);
+                spinnerPlayer2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        player2 = listPlayer.get(i);
+                        imagePlayer2.setImageBitmap(player2.bitmapReady);
+                       // textJanken2.setText(arrayReadySerifu[(int)(Math.random() * 3)]);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+
+                //ゲーム回数スピナー
 
                 String[] array = {"1","3","5","7","10","15","20"};
                 adapter = new ArrayAdapter<>(MainJanken.this,R.layout.spinner2,array);
@@ -192,7 +249,6 @@ public class MainJanken extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         maxGameCount = Integer.parseInt(((Spinner)adapterView).getSelectedItem().toString());
                     }
-
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {
 
@@ -205,24 +261,32 @@ public class MainJanken extends AppCompatActivity {
 
     }
     //リセット処理
+    @SuppressLint("SetTextI18n")
     void reset(){
+
+        spinnerMaxTimes.setEnabled(true);
+        spinnerPlayer1.setEnabled(true);
+        spinnerPlayer2.setEnabled(true);
+
         player1 = listPlayer.get(0);
-        player2 = listPlayer.get(0);
+        player2 = listPlayer.get(1);
         imagePlayer1.setImageBitmap(player1.bitmapReady);
         imagePlayer2.setImageBitmap(player2.bitmapReady);
 
         spinnerMaxTimes.setSelection(0);
         spinnerPlayer1.setSelection(0);
-        spinnerPlayer2.setSelection(0);
+        spinnerPlayer2.setSelection(1);
 
-        textJanken1.setText("   ");
-        textJanken2.setText("   ");
+        textJanken1.setText("");
+        textJanken2.setText("");
+        //textWinFlag1.setBackgroundResource();
         winCount1 = 0;
         winCount2 = 0;
         textWinCount1.setText("０");
         textWinCount2.setText("０");
-        gameCount = 1;
-        textGameCount.setText(gameCount + "かいめ");
+        gameCount = 0;
+        textGameCount.setText(gameCount + " かいめ");
+        gameflag =JANKEN;
 
         textComment.setText(player1.name + "と\n" + player2.name + "の\n" + "じゃんけん！");
 
@@ -231,27 +295,77 @@ public class MainJanken extends AppCompatActivity {
         buttonPaa.setEnabled(false);
         buttonStart.setEnabled(true);
         buttonStart.setText("じゃんけん");
+        buttonStart.setBackgroundResource(R.drawable.bottontype);
 
     }
+    //リセットボタン
+
     public void onButtonReset(View view) {
         reset();
     }
 
+    //じゃんけん、あいこ、けっかボタン
+
+    @SuppressLint("SetTextI18n")
     public void onButtonStart(View view) {
+
+        spinnerPlayer1.setEnabled(false);
+        spinnerPlayer2.setEnabled(false);
+        spinnerMaxTimes.setEnabled(false);
+        buttonStart.setBackgroundResource(R.drawable.bottontype2);
+
+        if(gameflag == AIKO){
+            ready();
+            textComment.setText("あいこで・・・");
+
+        }
+        else if(gameflag == JANKEN){
+            ready();
+            textComment.setText("じゃんけん・・・");
+            gameCount++;
+            textGameCount.setText( gameCount + " かいめ");}
+        else {
+            //最終勝利判定
+            buttonStart.setEnabled(false);
+            int winCount1 = Integer.parseInt(textWinCount1.getText().toString());
+            int winCount2 = Integer.parseInt(textWinCount2.getText().toString());
+
+            if(winCount1 == winCount2){
+                textComment.setText(winCount1 + "　たい　" + winCount2 +"で\nひきわけ～");
+            }else if(winCount1 > winCount2){
+                textComment.setText(winCount1 + "　たい　" + winCount2 +"で\n"
+                + player1.name + "の\nかち～！");
+                textJanken1.setText(arrayWinSerifu[(int)(Math.random() * 3)]);
+                textJanken2.setText(arrayLoseSerifu[(int)(Math.random() * 3)]);
+                imagePlayer1.setImageBitmap(player1.bitmapWin);
+                imagePlayer2.setImageBitmap(player2.bitmapLose);
+            }else {
+                textComment.setText(winCount1 + "　たい　" + winCount2 +"で\n"
+                        + player2.name + "の\nかち～！");
+                textJanken1.setText(arrayLoseSerifu[(int)(Math.random() * 3)]);
+                textJanken2.setText(arrayWinSerifu[(int)(Math.random() * 3)]);
+                imagePlayer1.setImageBitmap(player1.bitmapLose);
+                imagePlayer2.setImageBitmap(player2.bitmapWin);
+            }
+        }
+
+    }
+
+    //readyの状態メソッド
+
+    void ready(){
         buttonGuu.setEnabled(true);
         buttonChoki.setEnabled(true);
         buttonPaa.setEnabled(true);
         buttonStart.setEnabled(false);
         imagePlayer1.setImageBitmap(player1.bitmapReady);
         imagePlayer2.setImageBitmap(player2.bitmapReady);
-        textJanken1.setText("");
-        textJanken2.setText("");
-        if(gameflag == AIKO){
-            textComment.setText("あいこで・・・");
-        }
-        else
-        textComment.setText("じゃんけん・・・");
+        textJanken1.setText(arrayReadySerifu[(int)(Math.random() * 3)]);
+        textJanken2.setText(arrayReadySerifu[(int)(Math.random() * 3)]);
+
     }
+
+    //じゃんけんボタン
 
     public void onButtonPaa(View view) {
         imagePlayer1.setImageBitmap(player1.bitmapPaa);
@@ -271,7 +385,10 @@ public class MainJanken extends AppCompatActivity {
         janken();
         gameResult(GUU);
     }
+
+    //じゃんけんボタンの共通処理
     void janken(){
+        buttonStart.setBackgroundResource(R.drawable.bottontype);
         buttonPaa.setEnabled(false);
         buttonGuu.setEnabled(false);
         buttonChoki.setEnabled(false);
@@ -282,7 +399,7 @@ public class MainJanken extends AppCompatActivity {
             textComment.setText("ぽ　ん　！");
     }
 
-
+////////////////////////////////////じゃんけん勝敗決定///////////////////////
     void gameResult(int myHand){
 
         //プレイヤー２（コンピューター）の手を決める
@@ -326,12 +443,11 @@ public class MainJanken extends AppCompatActivity {
         textWinCount1.setText("" + winCount1);
         textWinCount2.setText("" + winCount2);
 
-        if(gameCount == maxGameCount){
+        if(gameCount >= maxGameCount && gameflag != AIKO){
             gameflag = RESULT;
             buttonStart.setText("けっか");}
-        if(gameflag == JANKEN){
-        gameCount++;
-        textGameCount.setText( gameCount + "かいめ");}
+
+
 
 
 

@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        findViewById(R.id.layoutMain2).getBackground().setAlpha(120);
 
         //各部品オブジェクト取得
         buttonStart = findViewById(R.id.buttonStart);

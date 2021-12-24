@@ -10,9 +10,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainJanken"
-            android:screenOrientation="landscape"></activity>
-        <activity android:name=".MainActivity"
+        <activity android:name=".MakePlayer"></activity>
+        <activity
+            android:name=".MainJanken"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".MainActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layoutMain"
+    android:id="@+id/layoutMain2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
@@ -14,33 +14,33 @@
         android:id="@+id/imagePlayer1"
         android:layout_width="240dp"
         android:layout_height="330dp"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="80dp"
         android:background="@android:color/background_light"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toStartOf="@+id/imagePlayer2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/com_choki" />
+        app:srcCompat="@drawable/wanwanready" />
 
     <ImageView
         android:id="@+id/imagePlayer2"
         android:layout_width="240dp"
         android:layout_height="330dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="120dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="140dp"
         android:background="@android:color/background_light"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/com_gu" />
+        app:srcCompat="@drawable/wanwanguu" />
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="263dp"
-        android:layout_height="198dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="367dp"
+        android:layout_height="134dp"
+        android:layout_marginTop="56dp"
         android:contentDescription="TODO"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,32 +57,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.886">
+        app:layout_constraintVertical_bias="0.89">
 
         <ImageButton
             android:id="@+id/buttonGuu"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginRight="40dp"
-
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:onClick="onButtonGuu"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/gu" />
 
         <ImageButton
             android:id="@+id/buttonChoki"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-
-            android:layout_marginRight="40dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:onClick="onButtonChoki"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/choki" />
 
         <ImageButton
             android:id="@+id/buttonPaa"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:onClick="onButtonPaa"
             android:scaleType="fitCenter"
-
             app:srcCompat="@drawable/pa" />
 
     </LinearLayout>
@@ -92,7 +90,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="92dp"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -114,7 +112,7 @@
             android:layout_marginLeft="2dp"
             android:background="@drawable/text_border5"
             android:padding="3dp"
-            android:text="かいせん"
+            android:text="かい"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
     </LinearLayout>
 
@@ -147,7 +145,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/futcha"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="@+id/imageView3"
         app:layout_constraintStart_toStartOf="@+id/imageView3"
@@ -157,35 +155,39 @@
         android:id="@+id/textGameTimes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="48dp"
         android:background="@drawable/text_border5"
-        android:padding="3dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:text="２かいめ"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toStartOf="@+id/imagePlayer2"
+        app:layout_constraintHorizontal_bias="0.448"
         app:layout_constraintStart_toEndOf="@+id/imagePlayer1"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <TextView
         android:id="@+id/textJanken1"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:background="@drawable/text_border5"
+        android:gravity="center"
         android:padding="3dp"
         android:text="グー"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="@+id/imagePlayer1"
         app:layout_constraintStart_toStartOf="@+id/imagePlayer1"
         app:layout_constraintTop_toBottomOf="@+id/imagePlayer1" />
 
     <TextView
         android:id="@+id/textJanken2"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:background="@drawable/bottontype5"
+        android:gravity="center"
         android:padding="3dp"
         android:text="チョキ"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="@+id/imagePlayer2"
         app:layout_constraintStart_toStartOf="@+id/imagePlayer2"
         app:layout_constraintTop_toBottomOf="@+id/imagePlayer2" />
@@ -196,9 +198,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="52dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/bottontype4"
-        android:text="すたーと"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:background="@drawable/bottontype"
+        android:onClick="onButtonStart"
+        android:text="じゃんけん"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -208,9 +210,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="52dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/bottontype4"
+        android:background="@drawable/bottontype"
+        android:onClick="onButtonReset"
         android:text="りせっと"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -218,9 +220,8 @@
         android:id="@+id/textWinFrag1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/bottontype3"
+        android:background="@android:drawable/btn_star_big_on"
         android:padding="3dp"
-        android:text="かち"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toTopOf="@+id/textWinTimes1"
         app:layout_constraintEnd_toEndOf="@+id/textWinTimes1"
@@ -228,11 +229,13 @@
 
     <TextView
         android:id="@+id/textWinTimes1"
-        android:layout_width="wrap_content"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
         android:background="@drawable/text_border4"
-        android:text="２"
+        android:gravity="center"
+        android:padding="4dp"
+        android:text="2"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="@+id/imagePlayer1"
@@ -243,9 +246,8 @@
         android:id="@+id/textWinFlag2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/bottontype3"
+        android:background="@android:drawable/btn_star_big_on"
         android:padding="3dp"
-        android:text="かち"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toTopOf="@+id/textWinTimes2"
         app:layout_constraintEnd_toEndOf="@+id/textWinTimes2"
@@ -253,11 +255,13 @@
 
     <TextView
         android:id="@+id/textWinTimes2"
-        android:layout_width="wrap_content"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:background="@drawable/text_border4"
-        android:text="３"
+        android:gravity="center"
+        android:padding="4dp"
+        android:text="22"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="@+id/imagePlayer2"
